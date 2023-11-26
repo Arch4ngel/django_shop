@@ -1,0 +1,25 @@
+[
+  {
+    "fields": {
+      "name": "Периферия",
+      "description": "Клавиатуры, мыши, вебкамеры и т.д."
+    },
+    "model": "catalog.category",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "name": "Видеокарты",
+      "description": "Видеокарты"
+    },
+    "model": "catalog.category",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "name": "ЦП",
+      "description": "Центральные процессоры"
+    },
+    "model": "catalog.category",
+    "pk": 3
+  }]
