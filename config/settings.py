@@ -86,6 +86,8 @@ DATABASES = {
         'NAME': 'sky_shop',
         'USER': 'postgres',
         'PASSWORD': os.environ.get('POSTGRES_PASS'),
+        'HOST': '127.0.0.1',
+        'PORT': 5432,
     },
 }
 
