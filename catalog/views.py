@@ -1,41 +1,35 @@
 from django.shortcuts import render
-from catalog.models import Category, Product
+from django.views import View
+from django.views.generic import ListView, DetailView
+from catalog.models import Product
 
 # Create your views here.
 
 
-def catalog(request):
-    product_list = Product.objects.all()
-    context = {
-        'object_list': product_list,
-        'title': 'Каталог'
-    }
-    return render(request, 'catalog/templates/index.html', context)
+class ProductListView(ListView):
+    model = Product
+    extra_context = {'title': 'Каталог'}
 
 
-def contacts(request):
-    context = {'title': 'Контакты'}
-    if request.method == 'POST':
+class ContactsPageView(View):
+    def get(self, request):
+        context = {'title': 'Контакты'}
+        return render(request, 'catalog/contacts.html', context)
+
+    def post(self, request):
         name = request.POST.get('name')
         phone = request.POST.get('phone')
         message = request.POST.get('message')
         print(f'{name} ({phone}): {message}')
-    return render(request, 'catalog/templates/contacts.html', context)
+        context = {'title': 'Контакты'}
+        return render(request, 'catalog/contacts.html', context)
 
 
-def product_info(request, pk):
-    product = Product.objects.get(pk=pk)
+class ProductDetailView(DetailView):
+    model = Product
 
-    context = {
-        'object': product,
-        'title': product.name,
-        'category': product.category
-    }
-    return render(request, 'catalog/templates/product-info.html', context)
-
-# def categories(request):
-#     context = {
-#         'object_list': Category.objects.all(),
-#         'title': 'Продукты'
-#     }
-#     return render(request, 'main/category_list.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        product = self.get_object()
+        context['title'] = product.name
+        return context

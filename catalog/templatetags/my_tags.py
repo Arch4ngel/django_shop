@@ -1,5 +1,6 @@
 import datetime
 from django import template
+from catalog.models import Category
 
 register = template.Library()
 
@@ -15,3 +16,8 @@ def current_time(format_string):
 def mediapath(path):
     if path:
         return f'media/{path}'
+
+
+@register.simple_tag
+def category_list():
+    return Category.objects.all()
