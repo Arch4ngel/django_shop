@@ -13,6 +13,11 @@
     line-clamp: 3;
     box-orient: vertical;}
 </style>
+<div class="row mb-4">
+  <div class="col-12">
+       <a class="btn btn-outline-primary" href="{% url 'catalog:create' %}">Добавить продукт</a>
+  </div>
+</div>
 <div class="container">
   <div class="card-deck mb-3 text-center">
     {% for object in object_list%}
@@ -28,6 +33,13 @@
           </ul>
           <h1 class="card-title pricing-card-title">{{ object.price }} руб.</h1>
           <a href="/product/{{object.pk}}" type="button" class="btn btn-lg btn-block btn-primary">Детали</a>
+          <a href="{% url 'catalog:edit' object.pk %}" type="button" class="btn btn-sm btn-outline-secondary">Редактировать</a>
+          <a href="{% url 'catalog:delete' object.pk %}" type="button" class="btn btn-sm btn-outline-secondary">Удалить</a>
+          <h6>
+            {% if object.active_version_number %}
+            Версия: {{ object.active_version_number }} ({{ object.active_version_name }})
+            {% endif %}
+          </h6>
         </div>
       </div>
     {% endfor %}
