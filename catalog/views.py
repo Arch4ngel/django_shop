@@ -11,7 +11,7 @@ from catalog.models import Product, Version
 # Create your views here.
 
 
-class ProductCreateView(CreateView, LoginRequiredMixin):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:catalog')
@@ -59,7 +59,7 @@ class ProductDetailView(DetailView):
         return context
 
 
-class ProductUpdateView(UpdateView, LoginRequiredMixin):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:catalog')
@@ -85,7 +85,7 @@ class ProductUpdateView(UpdateView, LoginRequiredMixin):
         return super().form_valid(form)
 
 
-class ProductDeleteView(DeleteView, LoginRequiredMixin):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     extra_context = {'title': 'Удалить пост'}
     success_url = reverse_lazy('catalog:catalog')
