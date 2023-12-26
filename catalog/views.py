@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
@@ -10,7 +11,7 @@ from catalog.models import Product, Version
 # Create your views here.
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(CreateView, LoginRequiredMixin):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:catalog')
@@ -58,7 +59,7 @@ class ProductDetailView(DetailView):
         return context
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(UpdateView, LoginRequiredMixin):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:catalog')
@@ -76,6 +77,7 @@ class ProductUpdateView(UpdateView):
     def form_valid(self, form):
         formset = self.get_context_data()['formset']
         self.object = form.save()
+        self.object.user = self.request.user
         if formset.is_valid():
             formset.instance = self.object
             formset.save()
@@ -83,7 +85,7 @@ class ProductUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(DeleteView, LoginRequiredMixin):
     model = Product
     extra_context = {'title': 'Удалить пост'}
     success_url = reverse_lazy('catalog:catalog')
