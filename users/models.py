@@ -2,7 +2,7 @@ import random
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-from catalog.models import NULLABLE
+NULLABLE = {'blank': True, 'null': True}
 
 
 code = ''.join([str(random.randint(0, 9)) for _ in range(12)])

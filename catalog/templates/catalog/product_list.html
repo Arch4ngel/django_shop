@@ -33,8 +33,10 @@
           </ul>
           <h1 class="card-title pricing-card-title">{{ object.price }} руб.</h1>
           <a href="/product/{{object.pk}}" type="button" class="btn btn-lg btn-block btn-primary">Детали</a>
-          {% if user.is_authenticated %}
+          {% if perms.catalog.change_product %}
             <a href="{% url 'catalog:edit' object.pk %}" type="button" class="btn btn-sm btn-outline-secondary">Редактировать</a>
+          {% endif %}
+          {% if perms.catalog.delete_product %}
             <a href="{% url 'catalog:delete' object.pk %}" type="button" class="btn btn-sm btn-outline-secondary">Удалить</a>
           {% endif %}
           <h6>
