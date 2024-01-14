@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import User
 
 NULLABLE = {'blank': True, 'null': True}
 
@@ -23,6 +24,8 @@ class Product(models.Model):
     price = models.IntegerField(verbose_name='Цена за штуку')
     date_created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     date_modified = models.DateTimeField(auto_now_add=True, verbose_name='Дата изменения')
+    user = models.ForeignKey(User, default=1, on_delete=models.CASCADE, verbose_name='Автор')
+    is_published = models.BooleanField(default=False, verbose_name="Опубликовано")
 
     def __str__(self):
         return f'{self.name} ({self.category})'
