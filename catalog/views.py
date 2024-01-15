@@ -7,7 +7,9 @@ from django.forms import inlineformset_factory
 from django.http import Http404
 
 from catalog.forms import ProductForm, VersionForm
-from catalog.models import Product, Version
+from catalog.models import Product, Version, Category
+from catalog.services import cache_category
+
 
 # Create your views here.
 
@@ -20,6 +22,11 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+
+class CategoryListView(ListView):
+    model = Category
+    extra_context = {'title': 'Категории'}
 
 
 class ProductListView(ListView):
@@ -61,6 +68,7 @@ class ProductDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         product = self.get_object()
         context['title'] = product.name
+        context['category'] = cache_category(self.object.pk)
         return context
 
 

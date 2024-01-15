@@ -1,0 +1,32 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block content %}
+<style>
+  .size {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    line-clamp: 3;
+    box-orient: vertical;}
+</style>
+<div class="container">
+  <div class="card-deck mb-3 text-center">
+    {% for object in object_list%}
+      <div class="card mb-4 box-shadow">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal">{{ object.name }}</h4>
+        </div>
+        <div class="card-body">
+          <ul class="list-unstyled mt-3 mb-4">
+            <li class="size"> {{ object.description }}</li>
+          </ul>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
